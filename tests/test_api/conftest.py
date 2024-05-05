@@ -8,11 +8,8 @@ from src.infrastructure.sqlalchemy.models import SecretORM
 @pytest.fixture
 def secret_data():
     def wrapper(code: str, secret: str, secret_key: str):
-        return {
-            "secret": secret,
-            "code": code,
-            "secret_key": secret_key
-        }
+        return {"secret": secret, "code": code, "secret_key": secret_key}
+
     return wrapper
 
 
@@ -25,5 +22,5 @@ async def create_secret_in_db(db_session_test: sessionmaker):
             await session.commit()
             await session.refresh(secret)
             return secret
-    return wrapper
 
+    return wrapper

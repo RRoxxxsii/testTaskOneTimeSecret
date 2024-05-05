@@ -6,6 +6,7 @@ class ProtocolUnitOfWork(Protocol):
     Protocol class for unit of work pattern
     Supposed to be inherited and implemented
     """
+
     def __init__(self):
         raise NotImplementedError
 

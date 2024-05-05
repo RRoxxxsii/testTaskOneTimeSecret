@@ -1,11 +1,11 @@
-from typing import Type
+from typing import AsyncIterator
 
-from typing_extensions import AsyncIterator
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
-
-from src.infrastructure.hasher.passlib import PasslibHasher
-from src.infrastructure.sqlalchemy.uow import UnitOfWork, ABCSQLAlchemyUnitOfWork
+from src.infrastructure.sqlalchemy.uow import (
+    ABCSQLAlchemyUnitOfWork,
+    UnitOfWork,
+)
 
 
 class DBProvider:
@@ -15,10 +15,3 @@ class DBProvider:
     async def provide_db(self) -> AsyncIterator[ABCSQLAlchemyUnitOfWork]:
         async with self.pool() as session:
             yield UnitOfWork(session)
-
-
-class HasherProvider:
-
-    @staticmethod
-    async def provide_hash() -> Type[PasslibHasher]:
-        return PasslibHasher

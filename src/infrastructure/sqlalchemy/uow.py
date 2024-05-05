@@ -22,7 +22,6 @@ class ABCSQLAlchemyUnitOfWork(ProtocolUnitOfWork):
 
 
 class UnitOfWork(ABCSQLAlchemyUnitOfWork):
-
     async def commit(self):
         await self._session.commit()
 

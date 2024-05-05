@@ -12,44 +12,25 @@ repos:
 
   # Отсортировывает импорты в проекте
   - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 5.11.5
     hooks:
       - id: isort
         exclude: __init__.py
         args: [ --profile, black, --filter-files, --line-length=79]
 
-  # Обновляет синтаксис Python кода в соответствии с последними версиями
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.1
-    hooks:
-      - id: pyupgrade
-        args: [ --py310-plus ]
-
-  # Форматирует код под PEP8
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.1
-    hooks:
-      - id: autopep8
-        args: [ "-i", "--in-place", "--max-line-length=79" ]
 
     # Сканер стилистических ошибок, нарушающие договоренности PEP8
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 5.0.0
     hooks:
       - id: flake8
+        language_version: python3.7
         exclude: __init__.py
-
-  # Форматирует код под PEP8 c помощью black
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
-    hooks:
-      - id: black
-        language_version: python3.11
-        args: ["--line-length=79"]
 
   # Проверка статических типов с помощью mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.0.0
     hooks:
       - id: mypy
+        language_version: python3.7
         args: [--no-strict-optional, --ignore-missing-imports]

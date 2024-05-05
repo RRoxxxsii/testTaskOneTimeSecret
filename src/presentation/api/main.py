@@ -1,5 +1,4 @@
 import uvicorn
-
 from fastapi import FastAPI
 
 from src.presentation.api.di.main import init_dependencies

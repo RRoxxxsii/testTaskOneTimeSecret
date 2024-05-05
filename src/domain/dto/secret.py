@@ -9,6 +9,7 @@ class CreateSecretDTO(BaseDTO):
     secret - secret itself
     code - code phrase to reveal the secret
     """
+
     secret: str
     code: str
 
@@ -19,5 +20,6 @@ class RevealSecretDTO(BaseDTO):
     secret key - key to secret
     code - code phrase to reveal the secret
     """
+
     secret_key: str
     code: str

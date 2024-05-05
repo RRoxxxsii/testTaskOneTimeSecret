@@ -11,17 +11,18 @@ async def test_generate_secret(api_client: AsyncClient):
     """
     url = "/generate/"
     response = await api_client.post(
-        url, json={
+        url,
+        json={
             "secret": "SUPER SECRET DATA",
             "code": "code",
-        }
+        },
     )
     assert response.status_code == status.HTTP_201_CREATED
     assert isinstance(response.json().get("secret_key"), str)
 
 
 async def test_get_secret_by_code_and_key(
-        api_client: AsyncClient, create_secret_in_db, secret_data
+    api_client: AsyncClient, create_secret_in_db, secret_data
 ):
     """
     Test getting secret by code and secret key when everything is okay.
@@ -30,7 +31,7 @@ async def test_get_secret_by_code_and_key(
     data = secret_data(
         code="code",
         secret_key=secrets.token_urlsafe(16),
-        secret="SUPER SECRET DATA!!!"
+        secret="SUPER SECRET DATA!!!",
     )
     secret = await create_secret_in_db(**data)
 
@@ -40,7 +41,9 @@ async def test_get_secret_by_code_and_key(
     assert response.status_code == status.HTTP_200_OK
 
 
-async def test_get_secret_that_already_taken(api_client: AsyncClient, create_secret_in_db, secret_data):
+async def test_get_secret_that_already_taken(
+    api_client: AsyncClient, create_secret_in_db, secret_data
+):
     """
     Test trying to get secret for the second time.
     Secret is not supposed to be retrieved from db as deleted,
@@ -49,7 +52,7 @@ async def test_get_secret_that_already_taken(api_client: AsyncClient, create_sec
     data = secret_data(
         code="code",
         secret_key=secrets.token_urlsafe(16),
-        secret="SUPER SECRET DATA!!!"
+        secret="SUPER SECRET DATA!!!",
     )
     secret = await create_secret_in_db(**data)
 
@@ -60,7 +63,7 @@ async def test_get_secret_that_already_taken(api_client: AsyncClient, create_sec
 
 
 async def test_get_secret_by_code(
-        api_client: AsyncClient, create_secret_in_db, secret_data
+    api_client: AsyncClient, create_secret_in_db, secret_data
 ):
     """
     Test getting secret by code and secret key when secret key is invalid.
@@ -68,7 +71,7 @@ async def test_get_secret_by_code(
     data = secret_data(
         code="code",
         secret_key=secrets.token_urlsafe(16),
-        secret="SUPER SECRET DATA!!!"
+        secret="SUPER SECRET DATA!!!",
     )
     secret = await create_secret_in_db(**data)
 
@@ -80,7 +83,7 @@ async def test_get_secret_by_code(
 
 
 async def test_get_secret_by_key(
-        api_client: AsyncClient, create_secret_in_db, secret_data
+    api_client: AsyncClient, create_secret_in_db, secret_data
 ):
     """
     Test getting secret by key and code when code is invalid.
@@ -88,7 +91,7 @@ async def test_get_secret_by_key(
     data = secret_data(
         code="code",
         secret_key=secrets.token_urlsafe(16),
-        secret="SUPER SECRET DATA!!!"
+        secret="SUPER SECRET DATA!!!",
     )
     secret = await create_secret_in_db(**data)
 

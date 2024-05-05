@@ -1,18 +1,11 @@
 import asyncio
-
-from typing_extensions import AsyncGenerator
-from typing import Any, Generator
+from typing import Any, AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
 from fastapi import FastAPI
 from httpx import AsyncClient
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
 from sqlalchemy.orm import close_all_sessions, sessionmaker
 
 from src.infrastructure.sqlalchemy.config import get_config
@@ -44,7 +37,7 @@ def event_loop() -> Generator:
 
 @pytest_asyncio.fixture(scope="function", autouse=True)
 async def clean_tables(db_session_test) -> None:
-    tables = ("secrets", )
+    tables = ("secrets",)
     async with db_session_test() as session:
         for table in tables:
             statement = text(f"""TRUNCATE TABLE {table} CASCADE;""")
@@ -54,5 +47,7 @@ async def clean_tables(db_session_test) -> None:
 
 @pytest_asyncio.fixture(scope="function")
 async def api_client() -> AsyncGenerator[AsyncClient, Any]:
-    async with AsyncClient(app=build_testapp(), base_url="http://test") as client_:
+    async with AsyncClient(
+        app=build_testapp(), base_url="http://test"
+    ) as client_:
         yield client_

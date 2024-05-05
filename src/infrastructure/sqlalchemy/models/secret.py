@@ -1,4 +1,4 @@
-from sqlalchemy import String, Boolean
+from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.infrastructure.sqlalchemy.models.base import AbstractModel
@@ -12,6 +12,7 @@ class SecretORM(AbstractModel):
     - is_active: whether or not the secret is active
     after one usage supposed to expire
     """
+
     __tablename__ = "secrets"
 
     secret: Mapped[str] = mapped_column(String(130))

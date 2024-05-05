@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Iterable, Optional, Generic, Type
+from typing import Generic, Iterable, Optional, Type, TypeVar
 
-from sqlalchemy import select, update, delete
+from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.infrastructure.sqlalchemy.models.base import AbstractModel
@@ -10,7 +10,6 @@ Model = TypeVar("Model", bound=AbstractModel)
 
 
 class AbstractRepository(Generic[Model], ABC):
-
     def __init__(self, session: AsyncSession, model: Type[Model]):
         self._session = session
         self.model = model
@@ -37,7 +36,6 @@ class AbstractRepository(Generic[Model], ABC):
 
 
 class BaseRepository(AbstractRepository[Model]):
-
     async def create(self, **kwargs) -> Model:
         """Creates an instance of a model"""
         obj = self.model(**kwargs)

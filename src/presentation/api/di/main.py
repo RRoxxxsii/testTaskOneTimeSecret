@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from src.infrastructure.sqlalchemy.main import create_engine, build_sessions
 from src.infrastructure.sqlalchemy.config import get_config
-from src.presentation.api.di.adapters import get_uow, get_hasher
-from src.presentation.api.di.providers import DBProvider, HasherProvider
+from src.infrastructure.sqlalchemy.main import build_sessions, create_engine
+from src.presentation.api.di.adapters import get_uow
+from src.presentation.api.di.providers import DBProvider
 
 
 def init_dependencies(app: FastAPI):
@@ -14,4 +14,3 @@ def init_dependencies(app: FastAPI):
     db = DBProvider(async_session_maker)
 
     app.dependency_overrides[get_uow] = db.provide_db
-    app.dependency_overrides[get_hasher] = HasherProvider.provide_hash
